@@ -113,7 +113,7 @@ export default function App() {
       'ORG:مرطبات رتولة - ذوق والطعم سعادة',
       `TEL;TYPE=CELL,VOICE:${BRAND_INFO.phoneInternational}`,
       `URL:${BRAND_INFO.instagramUrl}`,
-      'ADR;TYPE=WORK:;;البصرة;البصرة;;العراق',
+      `ADR;TYPE=WORK:;;${BRAND_INFO.addressAr};البصرة;البصرة;;العراق`,
       'END:VCARD',
     ].join('\n');
 
@@ -464,6 +464,21 @@ export default function App() {
                     مرطبات رتولة — العراق · البصرة
                   </h2>
 
+                  {/* Detailed Address Badge */}
+                  <div className="bg-[#FFF9F5] border border-[#EADFD4] rounded-2xl p-3.5 sm:p-4 mb-4 flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-[#DF3B88]/15 text-[#DF3B88] flex items-center justify-center shrink-0 mt-0.5">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] font-bold text-[#DF3B88] mb-0.5">
+                        العنوان بالتفصيل
+                      </div>
+                      <p className="text-xs sm:text-sm font-extrabold text-[#112A28] leading-relaxed">
+                        {BRAND_INFO.addressAr}
+                      </p>
+                    </div>
+                  </div>
+
                   <p className="text-xs sm:text-sm text-[#425B58] mb-6">
                     تفضلوا بزيارتنا في البصرة أو تواصلوا معنا مباشرة لمعرفة أقرب نقطة دالة وتفاصيل التوصيل:
                   </p>
@@ -575,7 +590,7 @@ export default function App() {
                     زورونا في مرطبات رتولة
                   </h3>
                   <p className="text-xs text-[#B5D6D4] leading-relaxed mb-6">
-                    انقر للانتقال مباشرة إلى موقعنا الدقيق في خرائط كوكل أو احفظ معلومات المحل في هاتفك للتواصل السريع.
+                    {BRAND_INFO.addressAr}
                   </p>
                 </div>
 
