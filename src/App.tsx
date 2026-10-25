@@ -5,8 +5,6 @@
 
 import React, { useMemo, useState } from 'react';
 import {
-  ChevronLeft,
-  ChevronRight,
   Compass,
   Download,
   IceCreamCone,
@@ -43,15 +41,6 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeProduct, setActiveProduct] = useState<ProductItem | null>(null);
   const [isCardModalOpen, setIsCardModalOpen] = useState<boolean>(false);
-  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
-
-  const scrollHorizontal = (direction: 'next' | 'prev') => {
-    if (scrollContainerRef.current) {
-      // In RTL Arabic, next moves left (-360), prev moves right (+360)
-      const delta = direction === 'next' ? -360 : 360;
-      scrollContainerRef.current.scrollBy({ left: delta, behavior: 'smooth' });
-    }
-  };
 
   // Interactive Flavor Mixer State
   const [builderBase, setBuilderBase] = useState<string>('waffle-cone');
@@ -277,33 +266,6 @@ export default function App() {
                   );
                 })}
               </div>
-
-              {/* Browse Guide & Desktop Next/Prev Arrows */}
-              <div className="flex items-center justify-between pt-1">
-                <div className="text-[11px] sm:text-xs text-[#5A726F] font-bold flex items-center gap-1.5">
-                  <span className="inline-block w-2 h-2 rounded-full bg-[#DF3B88] animate-pulse" />
-                  <span>اسحب أفقياً لتصفح الأصناف ({filteredItems.length} صنف)</span>
-                </div>
-
-                <div className="hidden sm:flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => scrollHorizontal('prev')}
-                    className="w-8 h-8 rounded-xl bg-white border border-[#EADFD4] hover:border-[#123E3B] text-[#123E3B] flex items-center justify-center transition-colors shadow-xs active:scale-95"
-                    aria-label="السابق"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollHorizontal('next')}
-                    className="w-8 h-8 rounded-xl bg-white border border-[#EADFD4] hover:border-[#123E3B] text-[#123E3B] flex items-center justify-center transition-colors shadow-xs active:scale-95"
-                    aria-label="التالي"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
             </div>
 
             {/* Empty Search Result State */}
@@ -325,16 +287,13 @@ export default function App() {
               </div>
             )}
 
-            {/* HORIZONTAL PRODUCT ROWS: 1 Horizontal Row on Mobile | 2 Horizontal Rows on Desktop */}
-            <div
-              ref={scrollContainerRef}
-              className="flex md:grid md:grid-rows-2 md:grid-flow-col gap-3 sm:gap-4 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth no-scrollbar"
-            >
+            {/* VERTICAL GRID: 1 Item Per Row on Mobile | 3 Items Per Row on Desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {filteredItems.map((item) => (
                 <article
                   key={item.id}
                   onClick={() => setActiveProduct(item)}
-                  className="group cursor-pointer bg-white border border-[#EADFD4] hover:border-[#DF3B88]/60 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-150 active:scale-[0.98] sm:hover:-translate-y-0.5 sm:hover:shadow-lg flex items-stretch w-[285px] sm:w-[320px] md:w-[340px] h-[124px] sm:h-[132px] shrink-0 snap-start"
+                  className="group cursor-pointer bg-white border border-[#EADFD4] hover:border-[#DF3B88]/60 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-150 active:scale-[0.98] sm:hover:-translate-y-0.5 sm:hover:shadow-lg flex items-stretch h-[116px] sm:h-[126px]"
                 >
                   {/* Right Stage: Visual Thumbnail (RTL) */}
                   <div className="w-24 sm:w-28 bg-gradient-to-b from-[#FDF3F7] via-[#FAF1E8] to-[#F3E7DB] p-2 flex items-center justify-center shrink-0 relative overflow-hidden">
