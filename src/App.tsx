@@ -557,16 +557,43 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Save Contact Action */}
-              <div className="lg:col-span-5 bg-white border border-[#EADFD4] rounded-3xl p-6 flex flex-col items-center justify-center gap-4">
-                <button
-                  type="button"
-                  onClick={handleDownloadVCard}
-                  className="min-h-[46px] w-full py-2.5 px-4 text-xs font-bold text-white bg-[#DF3B88] hover:bg-[#C42B73] rounded-2xl transition-colors flex items-center justify-center gap-2"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>حفظ رقم المحل في الموبايل (vCard)</span>
-                </button>
+              {/* Save Contact & Map Navigation Action */}
+              <div className="lg:col-span-5 bg-gradient-to-br from-[#123E3B] to-[#0D2E2C] text-white border border-[#256661] rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-md">
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-[#DF3B88]/20 border border-[#DF3B88]/40 flex items-center justify-center mb-4">
+                    <MapPin className="w-6 h-6 text-[#FDE047]" />
+                  </div>
+                  <div className="text-xs font-bold text-[#FDE047] mb-1">
+                    الموقع على الخريطة
+                  </div>
+                  <h3 className="font-display text-xl sm:text-2xl font-black mb-2">
+                    زورونا في مرطبات رتولة
+                  </h3>
+                  <p className="text-xs text-[#B5D6D4] leading-relaxed mb-6">
+                    انقر للانتقال مباشرة إلى موقعنا الدقيق في خرائط كوكل أو احفظ معلومات المحل في هاتفك للتواصل السريع.
+                  </p>
+                </div>
+
+                <div className="space-y-2.5">
+                  <a
+                    href={BRAND_INFO.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full min-h-[46px] px-4 py-2.5 rounded-2xl bg-[#DF3B88] hover:bg-[#C42B73] text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <Navigation className="w-4 h-4 text-[#FDE047]" />
+                    <span>الانتقال للموقع في خرائط كوكل</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={handleDownloadVCard}
+                    className="w-full min-h-[46px] px-4 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2"
+                  >
+                    <Download className="w-4 h-4 text-[#FDE047]" />
+                    <span>حفظ رقم المحل في الموبايل (vCard)</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
