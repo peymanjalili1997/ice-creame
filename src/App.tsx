@@ -131,22 +131,20 @@ export default function App() {
       className="min-h-screen flex flex-col bg-[#FFF9F5] text-[#112A28] pb-24 md:pb-0"
       dir="rtl"
     >
-      {/* Strict 3-Zone Top Bar Contract (Compact 54px on Mobile) */}
+      {/* Header with enlarged standalone Brand Logo */}
       <header className="sticky top-0 z-30 bg-[#FFF9F5]/95 backdrop-blur-md border-b border-[#EADFD4]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-8 px-4 sm:px-6 h-14 sm:h-16">
-          {/* Zone 1: Brand Logo & Wordmark */}
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-6 px-4 sm:px-6 h-16 sm:h-20">
+          {/* Zone 1: Standalone Official Brand Logo */}
           <a
             href="#"
-            className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 shrink-0"
+            aria-label="مرطبات رتولة - الرئيسية"
+            className="flex items-center group transition-transform active:scale-95 shrink-0"
           >
             <img
               src={BRAND_INFO.logo}
-              alt="شعار مرطبات رتولة"
-              className="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+              alt="مرطبات رتولة"
+              className="h-12 sm:h-16 w-auto object-contain transition-transform group-hover:scale-105"
             />
-            <span className="font-display text-lg sm:text-2xl font-extrabold tracking-tight text-[#123E3B] whitespace-nowrap">
-              مرطبات رتولة
-            </span>
           </a>
 
           {/* Zone 2: 4 concise single-line text navigation links */}
