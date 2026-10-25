@@ -5,10 +5,11 @@
 
 import React, { useMemo, useState } from 'react';
 import {
-  Compass,
+  Clock,
   Download,
   IceCreamCone,
   Instagram,
+  Map,
   MapPin,
   MessageCircle,
   Navigation,
@@ -517,154 +518,172 @@ export default function App() {
           </div>
         </section>
 
-        {/* SECTION 3: BASRA LOCATION ("أقرب نقطة دالة") & BUSINESS CARD */}
+        {/* SECTION 3: BASRA LOCATION & BUSINESS CARD */}
         <section id="basra-location" className="py-8 sm:py-12">
           <div id="contact" className="max-w-7xl mx-auto px-3.5 sm:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-              {/* Basra Location & 1-Tap Maps Card */}
+              {/* Map Placeholder & Direct Contact Card */}
               <div className="lg:col-span-7 bg-white border border-[#EADFD4] rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
                     <span className="text-xs font-bold text-[#DF3B88]">
-                      موقعنا في البصرة · أقرب نقطة دالة
+                      موقعنا في البصرة
                     </span>
                     <span className="text-xs font-bold text-[#123E3B]">
                       يومياً 11:00 ص — 01:30 ص
                     </span>
                   </div>
 
-                  <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#112A28] mb-2">
-                    مرطبات رتولة — العراق · البصرة
+                  <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#112A28] mb-4">
+                    خريطة موقع المحل
                   </h2>
 
-                  {/* Detailed Address Badge */}
-                  <div className="bg-[#FFF9F5] border border-[#EADFD4] rounded-2xl p-3.5 sm:p-4 mb-4 flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-[#DF3B88]/15 text-[#DF3B88] flex items-center justify-center shrink-0 mt-0.5">
-                      <MapPin className="w-4 h-4" />
+                  {/* Empty Reserved Map Placeholder Container */}
+                  <div className="w-full min-h-[250px] sm:min-h-[270px] rounded-2xl border-2 border-dashed border-[#DF3B88]/30 bg-[#FFFBF8] flex flex-col items-center justify-center p-6 text-center mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-[#DF3B88]/10 text-[#DF3B88] flex items-center justify-center mb-3">
+                      <Map className="w-7 h-7" />
                     </div>
-                    <div>
-                      <div className="text-[11px] font-bold text-[#DF3B88] mb-0.5">
-                        العنوان بالتفصيل
-                      </div>
-                      <p className="text-xs sm:text-sm font-extrabold text-[#112A28] leading-relaxed">
-                        {BRAND_INFO.addressAr}
-                      </p>
+                    <div className="text-sm sm:text-base font-extrabold text-[#112A28] mb-1">
+                      خريطة المحل (قيد التجهيز)
                     </div>
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-[#425B58] mb-6">
-                    تفضلوا بزيارتنا في البصرة أو تواصلوا معنا مباشرة لمعرفة أقرب نقطة دالة وتفاصيل التوصيل:
-                  </p>
-
-                  {/* Google Maps & WhatsApp Location Request Buttons */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                    <p className="text-xs text-[#5A726F] max-w-sm mb-4 leading-relaxed">
+                      هذه المساحة مخصصة لعرض خريطة المحل فور تجهيزها. يمكنك حالياً فتح موقعنا مباشرة في خرائط كوكل بالضغط أدناه:
+                    </p>
                     <a
                       href={BRAND_INFO.googleMapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="min-h-[48px] px-4 py-3 rounded-2xl bg-[#123E3B] hover:bg-[#0D2E2C] text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-[#123E3B] hover:bg-[#0D2E2C] text-white font-bold text-xs sm:text-sm transition-colors shadow-sm"
                     >
                       <Navigation className="w-4 h-4 text-[#FDE047]" />
                       <span>افتح الموقع في خرائط كوكل</span>
-                    </a>
-
-                    <a
-                      href={`${BRAND_INFO.whatsappUrl}?text=${encodeURIComponent(
-                        'مرحبا مرطبات رتولة، ممكن إرسال اللوكيشن (الموقع) بالبصرة؟'
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group min-h-[48px] px-4 py-3 rounded-2xl bg-[#F2E8DE] hover:bg-[#25D366] text-[#112A28] hover:text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2"
-                    >
-                      <Compass className="w-4 h-4 text-[#25D366] group-hover:text-white transition-colors" />
-                      <span>اطلب اللوكيشن عبر واتساب</span>
                     </a>
                   </div>
                 </div>
 
                 {/* 4 Direct Contact Tiles */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-4 border-t border-[#F4ECE4]">
-                  <a
-                    href={`tel:${BRAND_INFO.phoneInternational}`}
-                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#123E3B] transition-colors text-center"
-                  >
-                    <Phone className="w-4 h-4 text-[#123E3B] mx-auto mb-1.5" />
-                    <div className="text-[11px] text-[#5A726F]">اتصال</div>
-                    <div
-                      className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] mt-0.5"
-                      dir="ltr"
+                <div>
+                  <div className="text-xs font-bold text-[#5A726F] mb-2.5">
+                    للتواصل والطلب المباشر:
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+                    <a
+                      href={`tel:${BRAND_INFO.phoneInternational}`}
+                      className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#123E3B] transition-colors text-center"
                     >
-                      07706444465
-                    </div>
-                  </a>
+                      <Phone className="w-4 h-4 text-[#123E3B] mx-auto mb-1.5" />
+                      <div className="text-[11px] text-[#5A726F]">اتصال</div>
+                      <div
+                        className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] mt-0.5"
+                        dir="ltr"
+                      >
+                        07706444465
+                      </div>
+                    </a>
 
-                  <a
-                    href={BRAND_INFO.whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#25D366] hover:bg-[#25D366] transition-colors text-center"
-                  >
-                    <MessageCircle className="w-4 h-4 text-[#25D366] group-hover:text-white mx-auto mb-1.5 transition-colors" />
-                    <div className="text-[11px] text-[#5A726F] group-hover:text-white/90 transition-colors">
-                      واتساب
-                    </div>
-                    <div
-                      className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] group-hover:text-white mt-0.5 transition-colors"
-                      dir="ltr"
+                    <a
+                      href={BRAND_INFO.whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#25D366] hover:bg-[#25D366] transition-colors text-center"
                     >
-                      07706444465
-                    </div>
-                  </a>
+                      <MessageCircle className="w-4 h-4 text-[#25D366] group-hover:text-white mx-auto mb-1.5 transition-colors" />
+                      <div className="text-[11px] text-[#5A726F] group-hover:text-white/90 transition-colors">
+                        واتساب
+                      </div>
+                      <div
+                        className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] group-hover:text-white mt-0.5 transition-colors"
+                        dir="ltr"
+                      >
+                        07706444465
+                      </div>
+                    </a>
 
-                  <a
-                    href={BRAND_INFO.instagramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#DF3B88] transition-colors text-center"
-                  >
-                    <Instagram className="w-4 h-4 text-[#DF3B88] mx-auto mb-1.5" />
-                    <div className="text-[11px] text-[#5A726F]">انستغرام</div>
-                    <div
-                      className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] mt-0.5"
-                      dir="ltr"
+                    <a
+                      href={BRAND_INFO.instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#DF3B88] transition-colors text-center"
                     >
-                      @rat_oo10
-                    </div>
-                  </a>
+                      <Instagram className="w-4 h-4 text-[#DF3B88] mx-auto mb-1.5" />
+                      <div className="text-[11px] text-[#5A726F]">انستغرام</div>
+                      <div
+                        className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] mt-0.5"
+                        dir="ltr"
+                      >
+                        @rat_oo10
+                      </div>
+                    </a>
 
-                  <a
-                    href={BRAND_INFO.tiktokUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#123E3B] hover:bg-[#123E3B]/5 transition-colors text-center"
-                  >
-                    <TikTokIcon className="w-4 h-4 text-[#112A28] mx-auto mb-1.5" />
-                    <div className="text-[11px] text-[#5A726F]">تيك توك</div>
-                    <div
-                      className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] mt-0.5"
-                      dir="ltr"
+                    <a
+                      href={BRAND_INFO.tiktokUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#123E3B] hover:bg-[#123E3B]/5 transition-colors text-center"
                     >
-                      @rat_oo10
-                    </div>
-                  </a>
+                      <TikTokIcon className="w-4 h-4 text-[#112A28] mx-auto mb-1.5" />
+                      <div className="text-[11px] text-[#5A726F]">تيك توك</div>
+                      <div
+                        className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] mt-0.5"
+                        dir="ltr"
+                      >
+                        @rat_oo10
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              {/* Save Contact & Map Navigation Action */}
+              {/* Green Box: Detailed Address & Actions */}
               <div className="lg:col-span-5 bg-gradient-to-br from-[#123E3B] to-[#0D2E2C] text-white border border-[#256661] rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-md">
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-[#DF3B88]/20 border border-[#DF3B88]/40 flex items-center justify-center mb-4">
-                    <MapPin className="w-6 h-6 text-[#FDE047]" />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-[#DF3B88]/25 border border-[#DF3B88]/50 flex items-center justify-center shrink-0">
+                      <MapPin className="w-6 h-6 text-[#FDE047]" />
+                    </div>
+                    <div>
+                      <span className="inline-block text-[11px] font-bold text-[#FDE047] uppercase tracking-wider">
+                        العنوان وأقرب نقطة دالة
+                      </span>
+                      <h3 className="font-display text-xl sm:text-2xl font-black text-white">
+                        زورونا في البصرة
+                      </h3>
+                    </div>
                   </div>
-                  <div className="text-xs font-bold text-[#FDE047] mb-1">
-                    الموقع على الخريطة
+
+                  {/* Full Detailed Address Card */}
+                  <div className="bg-white/10 border border-white/15 rounded-2xl p-4 mb-3.5 backdrop-blur-sm">
+                    <div className="text-[11px] font-bold text-[#FDE047] mb-1.5 flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#FDE047]" />
+                      <span>العنوان بالتفصيل</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-extrabold text-white leading-relaxed">
+                      {BRAND_INFO.addressAr}
+                    </p>
                   </div>
-                  <h3 className="font-display text-xl sm:text-2xl font-black mb-2">
-                    زورونا في مرطبات رتولة
-                  </h3>
-                  <p className="text-xs text-[#B5D6D4] leading-relaxed mb-6">
-                    {BRAND_INFO.addressAr}
-                  </p>
+
+                  {/* Nearest Landmark Card */}
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-3.5 mb-3.5 text-xs">
+                    <span className="font-bold text-[#FDE047] block mb-1">
+                      أقرب نقطة دالة:
+                    </span>
+                    <p className="text-[#B5D6D4] leading-relaxed">
+                      {BRAND_INFO.landmarkAr}
+                    </p>
+                  </div>
+
+                  {/* Daily Opening Hours */}
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-3.5 mb-6 text-xs flex items-center gap-2.5">
+                    <Clock className="w-4 h-4 text-[#FDE047] shrink-0" />
+                    <div>
+                      <span className="font-bold text-white block">
+                        أوقات العمل اليومية:
+                      </span>
+                      <span className="text-[#B5D6D4]">
+                        يومياً من 11:00 صباحاً — 01:30 بعد منتصف الليل
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-2.5">
