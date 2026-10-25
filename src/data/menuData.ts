@@ -48,7 +48,7 @@ export const BRAND_INFO = {
   sloganAr: 'ذوق والطعم سعادة',
   cityAr: 'العراق · البصرة',
   landmarkAr: 'البصرة — العراق',
-  logo: `${import.meta.env.BASE_URL}assets/logo_ratoola.png`,
+  logo: `${import.meta.env.BASE_URL}assets/logo_ratoola.webp`,
   googleMapsUrl: 'https://maps.app.goo.gl/ys2razY7U3kj4ADX7',
   wazeUrl: 'https://waze.com/ul?ll=30.4234965,47.7846307&navigate=yes',
   instagram: 'rat_oo10',
