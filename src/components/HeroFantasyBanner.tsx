@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { BRAND_INFO, IllustrationVariant } from '../data/menuData';
 import { DessertIllustration } from './DessertIllustration';
+import { TikTokIcon } from './TikTokIcon';
 
 interface HeroTheme {
   id: string;
@@ -251,9 +252,21 @@ export const HeroFantasyBanner: React.FC = () => {
                 href={BRAND_INFO.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="col-span-2 sm:col-span-1 min-h-[46px] px-4 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
+                className="min-h-[46px] px-3.5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap"
               >
                 <Instagram className="w-4 h-4 text-[#FDE047]" />
+                <span className="font-mono tabular-nums font-bold" dir="ltr">
+                  @rat_oo10
+                </span>
+              </a>
+
+              <a
+                href={BRAND_INFO.tiktokUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-h-[46px] px-3.5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap"
+              >
+                <TikTokIcon className="w-4 h-4 text-[#69C9D0]" />
                 <span className="font-mono tabular-nums font-bold" dir="ltr">
                   @rat_oo10
                 </span>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Check, Copy, Download, Eye, Instagram, Phone, Sparkles } from 'lucide-react';
 import { BRAND_INFO, IllustrationVariant } from '../data/menuData';
 import { DessertIllustration } from './DessertIllustration';
+import { TikTokIcon } from './TikTokIcon';
 
 interface BusinessCardShowcaseProps {
   activeIllustration?: IllustrationVariant;
@@ -15,7 +16,7 @@ export const BusinessCardShowcase: React.FC<BusinessCardShowcaseProps> = ({
   activeSubtitle = 'مزيج الشوكولاتة البلجيكية والليمون والفراولة والتوت الأزرق',
 }) => {
   const [viewMode, setViewMode] = useState<'fantasy' | 'original'>('fantasy');
-  const [copiedField, setCopiedField] = useState<'phone' | 'insta' | null>(null);
+  const [copiedField, setCopiedField] = useState<'phone' | 'insta' | 'tiktok' | null>(null);
   const [imgError, setImgError] = useState(false);
   const [tilt, setTilt] = useState<{ rx: number; ry: number }>({ rx: 0, ry: 0 });
 
@@ -175,6 +176,38 @@ export const BusinessCardShowcase: React.FC<BusinessCardShowcaseProps> = ({
                     className="text-xs text-[#B5D6D4] hover:text-white px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors flex items-center gap-1 whitespace-nowrap shrink-0"
                   >
                     {copiedField === 'insta' ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-[#80C24C]" />
+                        <span>تم النسخ</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>نسخ</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 bg-[#0D2E2C]/85 backdrop-blur-xs border border-white/15 rounded-xl px-3.5 py-2.5">
+                  <a
+                    href={BRAND_INFO.tiktokUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 text-sm font-mono tabular-nums text-white hover:text-[#69C9D0] transition-colors"
+                    dir="ltr"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-[#F5A623] text-[#122624] flex items-center justify-center shrink-0 font-bold shadow-xs">
+                      <TikTokIcon className="w-4 h-4" />
+                    </span>
+                    <span className="font-bold tracking-wide text-base">rat_oo10</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy('rat_oo10', 'tiktok')}
+                    className="text-xs text-[#B5D6D4] hover:text-white px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors flex items-center gap-1 whitespace-nowrap shrink-0"
+                  >
+                    {copiedField === 'tiktok' ? (
                       <>
                         <Check className="w-3.5 h-3.5 text-[#80C24C]" />
                         <span>تم النسخ</span>

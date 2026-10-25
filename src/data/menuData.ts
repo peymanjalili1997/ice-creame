@@ -52,6 +52,8 @@ export const BRAND_INFO = {
   wazeUrl: 'https://waze.com/ul?q=Basra%20Iraq',
   instagram: 'rat_oo10',
   instagramUrl: 'https://instagram.com/rat_oo10',
+  tiktok: 'rat_oo10',
+  tiktokUrl: 'https://www.tiktok.com/@rat_oo10',
   phoneDisplay: '07706444465',
   phoneInternational: '+9647706444465',
   whatsappUrl: 'https://wa.me/9647706444465',

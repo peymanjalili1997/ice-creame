@@ -33,6 +33,7 @@ import {
   DessertIllustration,
 } from './components/DessertIllustration';
 import { HeroFantasyBanner } from './components/HeroFantasyBanner';
+import { TikTokIcon } from './components/TikTokIcon';
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
@@ -488,11 +489,11 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* 3 Direct Contact Tiles */}
-                <div className="grid grid-cols-3 gap-2.5 sm:gap-4 pt-4 border-t border-[#F4ECE4]">
+                {/* 4 Direct Contact Tiles */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-4 border-t border-[#F4ECE4]">
                   <a
                     href={`tel:${BRAND_INFO.phoneInternational}`}
-                    className="p-3.5 sm:p-4 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#123E3B] transition-colors text-center"
+                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#123E3B] transition-colors text-center"
                   >
                     <Phone className="w-4 h-4 text-[#123E3B] mx-auto mb-1.5" />
                     <div className="text-[11px] text-[#5A726F]">اتصال</div>
@@ -508,7 +509,7 @@ export default function App() {
                     href={BRAND_INFO.whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group p-3.5 sm:p-4 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#25D366] hover:bg-[#25D366] transition-colors text-center"
+                    className="group p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#25D366] hover:bg-[#25D366] transition-colors text-center"
                   >
                     <MessageCircle className="w-4 h-4 text-[#25D366] group-hover:text-white mx-auto mb-1.5 transition-colors" />
                     <div className="text-[11px] text-[#5A726F] group-hover:text-white/90 transition-colors">
@@ -526,10 +527,26 @@ export default function App() {
                     href={BRAND_INFO.instagramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3.5 sm:p-4 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#DF3B88] transition-colors text-center"
+                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#DF3B88] transition-colors text-center"
                   >
                     <Instagram className="w-4 h-4 text-[#DF3B88] mx-auto mb-1.5" />
                     <div className="text-[11px] text-[#5A726F]">انستغرام</div>
+                    <div
+                      className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] mt-0.5"
+                      dir="ltr"
+                    >
+                      @rat_oo10
+                    </div>
+                  </a>
+
+                  <a
+                    href={BRAND_INFO.tiktokUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FFF9F5] border border-[#EADFD4] hover:border-[#123E3B] hover:bg-[#123E3B]/5 transition-colors text-center"
+                  >
+                    <TikTokIcon className="w-4 h-4 text-[#112A28] mx-auto mb-1.5" />
+                    <div className="text-[11px] text-[#5A726F]">تيك توك</div>
                     <div
                       className="text-xs sm:text-sm font-extrabold font-mono tabular-nums text-[#112A28] mt-0.5"
                       dir="ltr"
@@ -562,7 +579,7 @@ export default function App() {
           <div className="font-display font-bold text-white text-sm">
             مرطبات رتولة — البصرة · ذوق والطعم سعادة
           </div>
-          <div className="flex items-center gap-6 font-mono tabular-nums" dir="ltr">
+          <div className="flex flex-wrap items-center gap-5 font-mono tabular-nums" dir="ltr">
             <a href={`tel:${BRAND_INFO.phoneInternational}`} className="hover:text-white">
               07706444465
             </a>
@@ -572,7 +589,15 @@ export default function App() {
               rel="noopener noreferrer"
               className="hover:text-white"
             >
-              @rat_oo10
+              Instagram: @rat_oo10
+            </a>
+            <a
+              href={BRAND_INFO.tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+            >
+              TikTok: @rat_oo10
             </a>
           </div>
         </div>
