@@ -13,6 +13,7 @@ import {
   MessageCircle,
   Navigation,
   Phone,
+  Search,
   Sparkles,
   X,
 } from 'lucide-react';
@@ -37,6 +38,7 @@ import { TikTokIcon } from './components/TikTokIcon';
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeProduct, setActiveProduct] = useState<ProductItem | null>(null);
   const [isCardModalOpen, setIsCardModalOpen] = useState<boolean>(false);
 
@@ -51,10 +53,20 @@ export default function App() {
   const [builderToppings, setBuilderToppings] = useState<string[]>(['crushed-pistachio']);
 
   const filteredItems = useMemo(() => {
-    return MENU_ITEMS.filter(
-      (item) => selectedCategory === 'all' || item.category === selectedCategory
-    );
-  }, [selectedCategory]);
+    const q = searchQuery.trim().toLowerCase();
+    return MENU_ITEMS.filter((item) => {
+      const matchesCategory =
+        selectedCategory === 'all' || item.category === selectedCategory;
+      if (!matchesCategory) return false;
+      if (!q) return true;
+      return (
+        item.name.toLowerCase().includes(q) ||
+        item.subtitle.toLowerCase().includes(q) ||
+        item.categoryLabel.toLowerCase().includes(q) ||
+        item.flavors.some((f) => f.toLowerCase().includes(q))
+      );
+    });
+  }, [selectedCategory, searchQuery]);
 
   const handleToggleScoop = (scoopId: string) => {
     setBuilderScoops((prev) => {
@@ -194,13 +206,45 @@ export default function App() {
         {/* UNIFIED FULL-CONTAINER FANTASY HERO BANNER */}
         <HeroFantasyBanner />
 
-        {/* SECTION 1: VISUAL-FIRST MENU SHOWCASE (2-Col Mobile Grid) */}
+        {/* SECTION 1: OFFICIAL MENU SHOWCASE WITH PRICES (2-Col Mobile Grid) */}
         <section id="specialties" className="py-8 sm:py-12">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 mb-6 sm:mb-8">
-              <h2 className="font-display text-xl sm:text-3xl font-extrabold text-[#112A28]">
-                أصناف رتولة ونكهات البصرة
-              </h2>
+            <div className="flex flex-col gap-4 mb-6 sm:mb-8">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#DF3B88] animate-pulse" />
+                    <span className="text-xs font-bold text-[#DF3B88]">
+                      المنيو الرسمي الكامل بالأسعار
+                    </span>
+                  </div>
+                  <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#112A28]">
+                    قائمة أصناف مرطبات رتولة ({filteredItems.length} صنف)
+                  </h2>
+                </div>
+
+                {/* Instant Touch Search Bar */}
+                <div className="relative w-full sm:w-72">
+                  <Search className="w-4 h-4 text-[#5A726F] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="ابحث عن صنف أو مشروب..."
+                    className="w-full min-h-[44px] pr-10 pl-8 py-2 rounded-2xl bg-white border border-[#EADFD4] text-xs font-bold text-[#112A28] placeholder-[#799491] focus:outline-none focus:border-[#DF3B88] focus:ring-2 focus:ring-[#DF3B88]/20 transition-all shadow-xs"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#5A726F] hover:text-[#112A28] p-1"
+                      aria-label="مسح البحث"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
 
               {/* Horizontally Scrollable Touch Filter Bar */}
               <div className="flex items-center gap-1.5 p-1.5 bg-[#F2E8DE] rounded-2xl overflow-x-auto">
@@ -211,7 +255,7 @@ export default function App() {
                       key={cat.id}
                       type="button"
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`min-h-[40px] px-4 py-2 text-xs font-bold rounded-xl transition-colors whitespace-nowrap shrink-0 ${
+                      className={`min-h-[40px] px-3.5 sm:px-4 py-2 text-xs font-bold rounded-xl transition-colors whitespace-nowrap shrink-0 ${
                         active
                           ? 'bg-[#123E3B] text-white shadow-xs'
                           : 'text-[#425B58] hover:text-[#112A28]'
@@ -224,38 +268,76 @@ export default function App() {
               </div>
             </div>
 
+            {/* Empty Search Result State */}
+            {filteredItems.length === 0 && (
+              <div className="text-center py-12 bg-white rounded-3xl border border-[#EADFD4] p-8">
+                <p className="text-sm font-bold text-[#425B58] mb-3">
+                  لم نجد أي صنف مطابق لبحثك &quot;{searchQuery}&quot;
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedCategory('all');
+                  }}
+                  className="px-4 py-2 text-xs font-bold text-white bg-[#123E3B] hover:bg-[#0D2E2C] rounded-xl transition-colors"
+                >
+                  عرض جميع الأصناف (85 صنف)
+                </button>
+              </div>
+            )}
+
             {/* 2-Column Mobile Grid -> 3-Column Desktop Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {filteredItems.map((item) => (
                 <article
                   key={item.id}
                   onClick={() => setActiveProduct(item)}
-                  className="group cursor-pointer bg-white border border-[#EADFD4] rounded-2xl sm:rounded-3xl overflow-hidden transition-transform duration-150 active:scale-[0.98] sm:hover:-translate-y-1 sm:hover:shadow-xl flex flex-col justify-between"
+                  className="group cursor-pointer bg-white border border-[#EADFD4] hover:border-[#DF3B88]/60 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-150 active:scale-[0.98] sm:hover:-translate-y-1 sm:hover:shadow-xl flex flex-col justify-between"
                 >
-                  {/* Visual Stage */}
-                  <div className="bg-gradient-to-b from-[#FDF3F7] via-[#FAF1E8] to-[#F3E7DB] h-36 sm:h-60 p-3 sm:p-6 flex items-center justify-center relative">
-                    <div className="w-28 h-28 sm:w-52 sm:h-52 transition-transform duration-200 group-hover:scale-105">
+                  {/* Visual Stage with Corner Badges */}
+                  <div className="bg-gradient-to-b from-[#FDF3F7] via-[#FAF1E8] to-[#F3E7DB] h-32 sm:h-52 p-3 sm:p-5 flex items-center justify-center relative">
+                    {/* Exact Price Badge */}
+                    <div
+                      className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-[#123E3B] text-[#FDE047] px-2.5 py-1 rounded-xl font-mono font-black text-[11px] sm:text-xs shadow-md border border-white/10 z-10"
+                      dir="ltr"
+                    >
+                      <span>{item.priceDisplay}</span>
+                    </div>
+
+                    {item.highlightTag && (
+                      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-[#DF3B88] text-white px-2 py-0.5 rounded-lg font-bold text-[10px] shadow-xs z-10">
+                        {item.highlightTag}
+                      </div>
+                    )}
+
+                    <div className="w-24 h-24 sm:w-44 sm:h-44 transition-transform duration-200 group-hover:scale-105">
                       <DessertIllustration variant={item.illustration} />
                     </div>
                   </div>
 
-                  {/* Compact Mobile-Friendly Caption */}
-                  <div className="p-3.5 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  {/* Compact Mobile-Friendly Caption with Price & Action */}
+                  <div className="p-3 sm:p-4.5 flex flex-col justify-between flex-1 gap-2.5">
                     <div className="min-w-0">
-                      <div className="text-[11px] sm:text-xs text-[#DF3B88] font-bold truncate">
+                      <div className="text-[10px] sm:text-xs text-[#DF3B88] font-bold truncate">
                         {item.categoryLabel}
                       </div>
-                      <h3 className="font-display text-sm sm:text-lg font-extrabold text-[#112A28] leading-snug truncate">
+                      <h3 className="font-display text-sm sm:text-lg font-black text-[#112A28] leading-snug truncate mt-0.5">
                         {item.name}
                       </h3>
-                      <div className="text-[11px] sm:text-xs text-[#5A726F] truncate mt-0.5">
-                        {item.flavors.join(' · ')}
+                      <div className="text-[11px] text-[#5A726F] line-clamp-1 mt-0.5">
+                        {item.subtitle}
                       </div>
                     </div>
 
-                    <span className="self-start sm:self-center text-[11px] sm:text-xs font-bold text-[#123E3B] bg-[#F2E8DE] group-hover:bg-[#DF3B88] group-hover:text-white px-2.5 py-1.5 rounded-lg sm:rounded-xl transition-colors whitespace-nowrap shrink-0">
-                      التفاصيل
-                    </span>
+                    <div className="flex items-center justify-between pt-2 border-t border-[#F4ECE4]">
+                      <span className="font-mono font-black text-xs sm:text-sm text-[#123E3B]" dir="ltr">
+                        {item.priceDisplay}
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-bold text-[#DF3B88] bg-[#FCE8F2] group-hover:bg-[#DF3B88] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors whitespace-nowrap shrink-0">
+                        طلب / تفاصيل
+                      </span>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -738,34 +820,47 @@ export default function App() {
               </div>
             </div>
 
-            <h3 className="font-display text-xl sm:text-2xl font-extrabold text-[#112A28] mb-1.5">
-              {activeProduct.name}
-            </h3>
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <h3 className="font-display text-xl sm:text-2xl font-black text-[#112A28]">
+                {activeProduct.name}
+              </h3>
+              <div
+                className="bg-[#123E3B] text-[#FDE047] font-mono font-black text-sm sm:text-base px-3 py-1.5 rounded-xl shrink-0"
+                dir="ltr"
+              >
+                {activeProduct.priceDisplay}
+              </div>
+            </div>
 
-            <p className="text-xs sm:text-sm text-[#425B58] mb-3">
+            <p className="text-xs sm:text-sm text-[#425B58] mb-2 font-bold">
               {activeProduct.subtitle}
             </p>
 
-            <div className="text-xs text-[#5A726F] mb-5">
-              {activeProduct.ingredients.join(' · ')}
+            <p className="text-xs text-[#5A726F] mb-4 leading-relaxed">
+              {activeProduct.description}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-1.5 mb-5 text-[11px] text-[#5A726F]">
+              <span className="font-bold text-[#112A28]">المكونات والنكهات:</span>
+              <span>{activeProduct.flavors.concat(activeProduct.ingredients).join(' · ')}</span>
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#F4ECE4]">
               <a
                 href={`${BRAND_INFO.whatsappUrl}?text=${encodeURIComponent(
-                  `مرحبا مرطبات رتولة، متوفر اليوم صنف (${activeProduct.name})؟`
+                  `مرحبا مرطبات رتولة 🍦\nحاب اطلب (${activeProduct.name}) بسعر (${activeProduct.priceDisplay}).\nمتوفر اليوم عندكم؟`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[46px] px-4 py-2.5 text-xs font-bold text-white bg-[#25D366] hover:bg-[#1EBE5D] rounded-xl flex items-center justify-center gap-2 shadow-sm"
+                className="min-h-[46px] px-4 py-2.5 text-xs font-bold text-white bg-[#25D366] hover:bg-[#1EBE5D] rounded-xl flex items-center justify-center gap-2 shadow-sm text-center"
               >
-                <MessageCircle className="w-4 h-4" />
-                <span>اسأل عنه بالواتساب</span>
+                <MessageCircle className="w-4 h-4 shrink-0" />
+                <span>طلب مباشر عالواتساب</span>
               </a>
               <button
                 type="button"
                 onClick={() => setActiveProduct(null)}
-                className="min-h-[46px] px-4 py-2.5 text-xs font-bold text-[#425B58] bg-[#F2E8DE] rounded-xl"
+                className="min-h-[46px] px-4 py-2.5 text-xs font-bold text-[#425B58] bg-[#F2E8DE] hover:bg-[#E2D5C8] rounded-xl transition-colors"
               >
                 إغلاق
               </button>
