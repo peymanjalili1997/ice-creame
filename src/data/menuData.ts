@@ -59,6 +59,8 @@ export const BRAND_INFO = {
   cityAr: 'العراق · البصرة',
   addressAr: 'البصرة — مجمع الأمل السكني 1 — حديقة العمارات المركزية — بجوار عمارة 23',
   landmarkAr: 'مجمع الأمل السكني 1 — حديقة العمارات المركزية (بجوار عمارة 23)',
+  openingHoursAr: 'يومياً من 04:00 عصراً — 01:00 بعد منتصف الليل',
+  openingHoursShortAr: 'يومياً 04:00 م — 01:00 ص',
   logo: `${import.meta.env.BASE_URL}assets/logo_ratoola.webp`,
   googleMapsUrl: 'https://maps.app.goo.gl/ys2razY7U3kj4ADX7',
   wazeUrl: 'https://waze.com/ul?ll=30.4234965,47.7846307&navigate=yes',

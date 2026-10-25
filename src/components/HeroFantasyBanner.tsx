@@ -66,13 +66,51 @@ const HERO_THEMES: HeroTheme[] = [
   },
 ];
 
+// Calculates live open/closed status based on Basra time (Asia/Baghdad)
+// Working hours: Daily 4:00 PM (16:00) to 1:00 AM (01:00)
+function getBasraLiveStatus(): { timeStr: string; isOpen: boolean } {
+  try {
+    const now = new Date();
+    const timeStr = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Baghdad',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    }).format(now);
+
+    const hour24Str = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Baghdad',
+      hour: 'numeric',
+      hour12: false,
+    }).format(now);
+
+    const minuteStr = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Baghdad',
+      minute: 'numeric',
+    }).format(now);
+
+    const hour = parseInt(hour24Str, 10);
+    const minute = parseInt(minuteStr, 10);
+    const totalMinutes = hour * 60 + minute;
+
+    // Daily from 4:00 PM (16:00 = 960m) to 1:00 AM (01:00 = 60m)
+    const isOpen = totalMinutes >= 16 * 60 || totalMinutes < 1 * 60;
+    return { timeStr, isOpen };
+  } catch {
+    const now = new Date();
+    const totalMinutes = now.getHours() * 60 + now.getMinutes();
+    const isOpen = totalMinutes >= 16 * 60 || totalMinutes < 1 * 60;
+    return { timeStr: 'البصرة', isOpen };
+  }
+}
+
 export const HeroFantasyBanner: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [offset, setOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [basraStatus, setBasraStatus] = useState<{
     timeStr: string;
     isOpen: boolean;
-  }>({ timeStr: '', isOpen: true });
+  }>(getBasraLiveStatus);
 
   // Auto-rotate hero ice cream every 3.8 seconds
   useEffect(() => {
@@ -84,27 +122,7 @@ export const HeroFantasyBanner: React.FC = () => {
 
   useEffect(() => {
     const updateBasraClock = () => {
-      try {
-        const now = new Date();
-        const timeStr = new Intl.DateTimeFormat('en-US', {
-          timeZone: 'Asia/Baghdad',
-          hour: 'numeric',
-          minute: '2-digit',
-          hour12: true,
-        }).format(now);
-
-        const hour24Str = new Intl.DateTimeFormat('en-US', {
-          timeZone: 'Asia/Baghdad',
-          hour: 'numeric',
-          hour12: false,
-        }).format(now);
-
-        const hour = parseInt(hour24Str, 10);
-        const isOpen = hour >= 11 || hour < 2;
-        setBasraStatus({ timeStr, isOpen });
-      } catch {
-        setBasraStatus({ timeStr: 'البصرة', isOpen: true });
-      }
+      setBasraStatus(getBasraLiveStatus());
     };
 
     updateBasraClock();
@@ -181,18 +199,31 @@ export const HeroFantasyBanner: React.FC = () => {
         />
 
         {/* Top Live Basra Status Bar inside Hero */}
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 pt-5 sm:pt-6 pb-3 border-b border-white/15 text-xs">
-          <div className="flex items-center gap-2 text-[#E2F3F2] font-bold">
-            <MapPin className="w-3.5 h-3.5 text-[#FDE047] shrink-0" />
-            <span>البصرة</span>
-            <span aria-hidden="true">·</span>
-            <span className="text-[#FDE047]">
-              {basraStatus.isOpen ? 'مفتوح الآن' : 'مغلق حالياً (يفتح ١١ ص)'}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 pt-5 sm:pt-6 pb-3 border-b border-white/15 text-xs">
+          <div className="flex items-center flex-wrap gap-2 text-[#E2F3F2] font-bold">
+            <span className="inline-flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-[#FDE047] shrink-0" />
+              <span>البصرة</span>
+            </span>
+            <span aria-hidden="true" className="text-white/40">·</span>
+            {basraStatus.isOpen ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 text-[#4ADE80] font-black text-xs shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+                مفتوح الآن
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EF4444]/20 border border-[#EF4444]/50 text-[#FCA5A5] font-black text-xs shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
+                مغلق حالياً (يفتح 04:00 عصراً)
+              </span>
+            )}
+            <span className="hidden sm:inline text-xs text-[#B5D6D4] font-medium">
+              · أوقات العمل: 04:00 م — 01:00 ص
             </span>
           </div>
 
           <div
-            className="flex items-center gap-1.5 text-[#C4E2E0] font-mono tabular-nums"
+            className="flex items-center gap-1.5 text-[#C4E2E0] font-mono tabular-nums text-xs"
             dir="ltr"
           >
             <Clock className="w-3.5 h-3.5 text-[#F9B4D2]" />

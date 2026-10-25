@@ -530,7 +530,7 @@ export default function App() {
                       موقعنا في البصرة
                     </span>
                     <span className="text-xs font-bold text-[#123E3B]">
-                      يومياً 11:00 ص — 01:30 ص
+                      {BRAND_INFO.openingHoursShortAr}
                     </span>
                   </div>
 
@@ -680,7 +680,7 @@ export default function App() {
                         أوقات العمل اليومية:
                       </span>
                       <span className="text-[#B5D6D4]">
-                        يومياً من 11:00 صباحاً — 01:30 بعد منتصف الليل
+                        {BRAND_INFO.openingHoursAr}
                       </span>
                     </div>
                   </div>
